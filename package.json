@@ -1,0 +1,14 @@
+{
+  "name": "genetic_algorithm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Gerwyn D Jones",
+  "license": "ISC",
+  "dependencies": {
+    "mocha": "^5.0.0"
+  }
+}
