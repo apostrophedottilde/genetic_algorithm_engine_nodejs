@@ -32,12 +32,12 @@ module.exports = {
         return genome;
     },
 
-    selection(genepool, fitnessFunction) {
+    selection: function(genepool, fitnessFunction) {
         let fitness = fitnessFunction();
         return genepool[fitness];
     },
 
-    binaryStringToDecimal(genome) {
+    binaryStringToDecimal: function (genome) {
         return digit = parseInt(genome, 2);
     }
 };
