@@ -24,7 +24,7 @@ module.exports = {
         };
     },
 
-    mutation: function(genome) {
+    mutateGenome: function(genome) {
         let rand = this.randomInRange(genome);
         const randomGene = genome.charAt(rand);
 
@@ -39,5 +39,17 @@ module.exports = {
 
     binaryStringToDecimal: function (genome) {
         return digit = parseInt(genome, 2);
+    },
+
+    generateRandomBinaryGenome: function (len, genome) {
+        if(genome.length === len) return genome;
+        let bit = Math.round(Math.random());
+        return this.generateRandomBinaryGenome(len, genome.concat(bit));
+    },
+
+    initialiseGenepool(len, genomeArray) {
+        if(Object.keys(genomeArray).length === len) return genomeArray;
+        genomeArray.push(this.generateRandomBinaryGenome(64, ""));
+        return this.initialiseGenepool(len, genomeArray);
     }
 };

@@ -3,7 +3,7 @@ const assert = require('assert'),
     pool = require('../app/genepool'),
     sinon    = require('sinon');
 
-describe('ga module', () => {
+describe('GA Engine', () => {
 
     const randomNumberStub = sinon.stub(gaEngine, 'randomInRange');
 
@@ -20,12 +20,12 @@ describe('ga module', () => {
         });
     });
 
-    describe('mutation', () => {
+    describe('mutate genome', () => {
         it('should mutate random bit by flipping', () => {
             const genome = '1111111111111111';
             randomNumberStub.returns(4);
 
-            const actual = gaEngine.mutation(genome);
+            const actual = gaEngine.mutateGenome(genome);
 
             assert.equal(actual, '1111011111111111');
         });
@@ -61,6 +61,21 @@ describe('ga module', () => {
             const actual = gaEngine.binaryStringToDecimal('1111000000000000');
             assert.equal(actual, '61440');
         })
+    });
+
+    describe('genepool creation', () => {
+        it("should create binary string genome of given length", () => {
+            let desiredLength = 32;
+            let actual = gaEngine.generateRandomBinaryGenome(desiredLength, "");
+            assert.notEqual(actual.match("^[0-1]*$"), null);
+            assert.equal(actual.length, desiredLength);
+        });
+
+        it("should create entire random genepool of given length", () => {
+            let desiredLength = 1000;
+            let actual = gaEngine.initialiseGenepool(desiredLength, []);
+            assert.equal(Object.keys(actual).length, desiredLength);
+        });
     });
 
     function getGenepool() {
