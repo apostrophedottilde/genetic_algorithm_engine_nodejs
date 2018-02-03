@@ -53,18 +53,36 @@ module.exports = {
 
     makeBiasedSelection: function(genepool) {
         const rouletteResult = Math.random() * 100;
-        return this.findGenomeMatchingFitnessPercentage(genepool, rouletteResult);
+        genepool = this.sortGenepoolByReletiveFitnessPercentage(genepool);
+        return this.findGenomeMatchingFitnessPercentage(genepool.slice(0), rouletteResult);
     },
 
-    selectNewRandomButBiasedGenepool: function(genepool, newPool) {
+    selectPairFromGenepool: function(genepool) {
+        return { gen1: this.selectRandomGenome(genepool), gen2: this.selectRandomGenome(genepool) };
+    },
+
+    selectRandomGenome: function(genepool) {
+        return genepool[this.randomInRange(genepool[0].genome.length)].genome;
+    },
+
+    selectNextGenGenepool: function(genepool, newPool, crossoverRate) {
         if(newPool.length === genepool.length) return newPool;
-        newPool.push(this.makeBiasedSelection(genepool));
-        return this.selectNewRandomButBiasedGenepool(genepool, newPool);
+        let genome1 = this.makeBiasedSelection(genepool);
+        let genome2 = this.makeBiasedSelection(genepool);
+        let rand = Math.random();
+        if (rand > 0 && rand < crossoverRate) {
+            pair = this.crossoverPair(genome1, genome2);
+            genome1 = pair.gen1;
+            genome2 = pair.gen2;
+        }
+        newPool.push(genome1);
+        newPool.push(genome2);
+        return this.selectNextGenGenepool(genepool, newPool);
     },
 
     findGenomeMatchingFitnessPercentage: function(genepool, percentage) {
         let g = genepool.shift();
-        if(genepool.length === 1 || g.percentage >= percentage) return g.genome;
+        if(genepool.length === 0 || g.percentage > percentage) return g.genome;
         return this.findGenomeMatchingFitnessPercentage(genepool, percentage);
     },
 

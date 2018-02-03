@@ -13,5 +13,9 @@ module.exports = {
 
   get genepool() {
       return genepool;
+  },
+
+  set genepool(genepool) {
+
   }
 };

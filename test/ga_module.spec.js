@@ -115,7 +115,7 @@ describe('GA Engine', () => {
 
         it('should select a genome from existing genepool based on a biasy of its fitness', () => {
             const genepoolWithFitnesses = genepoolWithUnOrderedReletiveFitnessPercentages();
-            sandbox.stub(Math, 'random').returns(24.666666);
+            sandbox.stub(Math, 'random').returns(24.666666 / 100);
 
             let actual = gaEngine.makeBiasedSelection(genepoolWithFitnesses);
 
@@ -123,9 +123,15 @@ describe('GA Engine', () => {
         });
 
         it('should create new genepool of same size based on reletive fitneses of existing members', () => {
-            let actual = gaEngine.selectNewRandomButBiasedGenepool(genepoolWithOrderedreletivefitnesses(), []);
+            let actual = gaEngine.selectNextGenGenepool(genepoolWithOrderedreletivefitnesses(), [], 0.02);
 
             assert.equal(actual.length, genepoolWithUnOrderedReletiveFitnessPercentages().length);
+        });
+
+        it('should select 1 random genome from the genepool', () => {
+            randomNumberStub.returns(2);
+            let actual = gaEngine.selectRandomGenome(firstGenerationGenepoolWithFitnessValues());
+            assert.equal(actual, '1111111100000000');
         });
     });
 
