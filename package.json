@@ -1,6 +1,6 @@
 {
-  "name": "@gezinspace/genetic_algorithm",
-  "version": "1.0.0",
+  "name": "genetic-algorithm-toolkit",
+  "version": "1.0.01",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,8 +8,7 @@
   },
   "repository": {
     "git": "https://github.com/gezinspace1/genetic_algorithm_engine_nodejs.git"
-  }
-}
+  },
   "author": "Gerwyn D Jones",
   "license": "ISC",
   "dependencies": {
