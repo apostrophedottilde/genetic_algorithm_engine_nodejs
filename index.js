@@ -1,1 +1,1 @@
-const mainLoop = require('./app/event_loop');
+require('./app/ga_engine');

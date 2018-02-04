@@ -1,6 +1,5 @@
 const assert = require('assert'),
     gaEngine = require('../app/ga_engine'),
-    pool = require('../app/genepool'),
     sinon    = require('sinon');
 
 let sandbox;
@@ -56,25 +55,20 @@ describe('GA Engine', () => {
 
     describe('selection', () => {
         it('should select a single genome from genepool based on fitness', () => {
-            sinon.stub(pool, 'genepool').returns(getFirstGenerationGenepool());
-            const genepool = pool.genepool;
             const fitnessFunction = (g) => 5;
-            const actual = gaEngine.selection(genepool, fitnessFunction);
+            const actual = gaEngine.selection(getFirstGenerationGenepool(), fitnessFunction);
             assert.equal(actual, '0000000000001111');
         });
 
         it('should get the sum fitness score from the every genome in the genepool', () => {
-            sinon.stub(pool, 'genepool').returns(getFirstGenerationGenepool());
             const actual = gaEngine.summedFitnessOfGenepool(firstGenerationGenepoolWithFitnessValues());
             assert.equal(actual, 262140);
         });
 
         it('should calculate fitness scores for each genome and return array of genome->fitness pair objects', () => {
-            sinon.stub(pool, 'genepool').returns(getFirstGenerationGenepool());
-            let genepool = pool.genepool;
             let fitnessFunction = (g) => gaEngine.binStringToDec(g);
 
-            let actual = gaEngine.determineFitnessOfEachGenomeInGenepool(genepool, fitnessFunction);
+            let actual = gaEngine.determineFitnessOfEachGenomeInGenepool(getFirstGenerationGenepool(), fitnessFunction);
 
             assert.equal(JSON.stringify(actual), JSON.stringify(firstGenerationGenepoolWithFitnessValues()));
         });
