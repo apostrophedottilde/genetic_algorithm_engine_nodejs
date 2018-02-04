@@ -1,20 +1,21 @@
-const ga = require('./ga_engine');
+This is a very simple usecase of these genetics algorithm helpers.
 
-let genepool;
-
-//initialise constants
-const crossoverRate = 0.6;
-const mutationRate = 0.08;
-
-// initialise random genepool
-genepool = ga.initialiseGenepool(32, []);
-
-// get fitnesses
-// this fitness function is used to calculate the remative fitness of a solution/genome.
-// in this example the fitness value is purely the decimal representation of the binary genome
-// where a higher value is considdered a better solution.
-let fitnessFunction = (g) => parseInt(g, 2);
-
+    const ga = require('./ga_engine');
+    
+    let genepool;
+    
+    //initialise constants
+    const crossoverRate = 0.6;
+    const mutationRate = 0.08;
+    
+    // initialise random genepool
+    genepool = ga.initialiseGenepool(32, []);
+    
+    // get fitnesses
+    // this fitness function is used to calculate the remative fitness of a solution/genome.
+    // in this example the fitness value is purely the decimal representation of the binary genome
+    // where a higher value is considdered a better solution.
+    let fitnessFunction = (g) => parseInt(g, 2);
     genepool = ga.determineFitnessOfEachGenomeInGenepool(genepool, fitnessFunction);
     genepool = ga.assignRelativeFitnessPercentagesToGenepool(genepool);
     // calculate initial total fitness of entire genepool
